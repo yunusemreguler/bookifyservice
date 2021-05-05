@@ -3,6 +3,7 @@ package com.example.bookifyservice.service;
 import com.example.bookifyservice.exception.BookNotFoundException;
 import com.example.bookifyservice.model.dao.BookDAO;
 import com.example.bookifyservice.repository.BookRepository;
+import com.example.bookifyservice.util.Utils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public BookDAO createBook(BookDAO bookDAO) {
+        bookDAO.setCreatedDate(Utils.getTimestamp());
         return bookRepository.save(bookDAO);
     }
 

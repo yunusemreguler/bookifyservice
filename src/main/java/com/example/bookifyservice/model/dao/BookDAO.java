@@ -28,8 +28,10 @@ public class BookDAO {
     private String author;
     private String description;
     private String genre;
-    private Date publishDate;
     private String publisher;
+    private Date publishDate;
+    @ReadOnlyProperty
+    private long createdDate;
 
 
 }

@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
+
 @RestController
 @RequestMapping("/api/1.0/book")
 @AllArgsConstructor
@@ -39,6 +41,10 @@ public class BookController {
         log.info("[deleteBook] Delete book request received, id = {}", bookId);
         bookService.deleteBook(bookId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Instant.now().getEpochSecond());
     }
 
 }
