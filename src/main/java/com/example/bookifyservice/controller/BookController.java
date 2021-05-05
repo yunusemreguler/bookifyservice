@@ -28,4 +28,17 @@ public class BookController {
         return new ResponseEntity(bookService.createBook(bookDAO), HttpStatus.CREATED);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<BookDAO> updateBook(@PathVariable("id") String bookId, @RequestBody BookDAO bookDAO){
+        log.info("[updateBook] Update book request received, id = {}", bookId);
+        return new ResponseEntity(bookService.updateBook(bookId, bookDAO), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<BookDAO> deleteBook(@PathVariable("id") String bookId){
+        log.info("[deleteBook] Delete book request received, id = {}", bookId);
+        bookService.deleteBook(bookId);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
 }

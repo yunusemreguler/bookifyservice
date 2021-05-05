@@ -9,4 +9,8 @@ public interface BookService {
 
     BookDAO createBook(BookDAO bookDAO);
 
+    BookDAO updateBook(String id, BookDAO bookDAO);
+
+    void deleteBook(String id);
+
 }
