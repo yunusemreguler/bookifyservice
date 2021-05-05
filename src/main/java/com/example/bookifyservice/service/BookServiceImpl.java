@@ -4,10 +4,12 @@ import com.example.bookifyservice.exception.BookNotFoundException;
 import com.example.bookifyservice.model.dao.BookDAO;
 import com.example.bookifyservice.repository.BookRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @AllArgsConstructor
+@Service
 public class BookServiceImpl implements BookService{
 
     BookRepository bookRepository;
@@ -23,7 +25,6 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public BookDAO createBook(BookDAO bookDAO) {
-        bookRepository.save(bookDAO);
-        return bookDAO;
+        return bookRepository.save(bookDAO);
     }
 }
