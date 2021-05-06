@@ -1,9 +1,12 @@
 package com.example.bookifyservice.controller;
 
 import com.example.bookifyservice.model.dao.BookDAO;
+import com.example.bookifyservice.model.dto.SearchBookDTO;
 import com.example.bookifyservice.service.BookService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,8 +46,10 @@ public class BookController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    public static void main(String[] args) {
-        System.out.println(Instant.now().getEpochSecond());
+    @PostMapping("/search")
+    public ResponseEntity<Page<BookDAO>> searchBooks(@RequestBody SearchBookDTO searchBookDTO, Pageable pageable){
+        log.info("[searchBooks] Search books request received, Search criteria = {}", searchBookDTO);
+        return new ResponseEntity(bookService.searchBooks(searchBookDTO, pageable), HttpStatus.OK);
     }
 
 }

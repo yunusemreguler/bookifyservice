@@ -2,9 +2,14 @@ package com.example.bookifyservice.service;
 
 import com.example.bookifyservice.exception.BookNotFoundException;
 import com.example.bookifyservice.model.dao.BookDAO;
+import com.example.bookifyservice.model.dto.SearchBookDTO;
 import com.example.bookifyservice.repository.BookRepository;
 import com.example.bookifyservice.util.Utils;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -41,6 +46,15 @@ public class BookServiceImpl implements BookService{
     public void deleteBook(String id) {
         doesBookExist(id);
         bookRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<BookDAO> searchBooks(SearchBookDTO searchBookDTO, Pageable pageable) {
+        ExampleMatcher customExampleMatcher = ExampleMatcher.matchingAll()
+                .withMatcher("name", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+                .withMatcher("author", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+                .withMatcher("genre", ExampleMatcher.GenericPropertyMatchers.exact());
+        return bookRepository.findAll(Example.of(searchBookDTO.toBookDAO(), customExampleMatcher), pageable);
     }
 
     private void doesBookExist(String id) {
