@@ -6,12 +6,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Size;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class SearchBookDTO {
 
+    @Size(min = 1, max = 100, message = "Book name lenght must be between 1 and 100!")
     private String name;
+    @Size(min = 1, max = 100, message = "Author name lenght must be between 1 and 100!")
     private String author;
     private Genre genre;
 

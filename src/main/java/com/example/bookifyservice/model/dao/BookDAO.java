@@ -1,6 +1,8 @@
 package com.example.bookifyservice.model.dao;
 
 import com.example.bookifyservice.model.domain.Genre;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,7 @@ public class BookDAO {
 
     @Id
     @ReadOnlyProperty
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String id;
     @NotBlank(message = "Book name must not be blank!")
     @Size(min = 1, max = 100, message = "Book name lenght must be between 1 and 100!")
@@ -32,6 +35,7 @@ public class BookDAO {
     private String publisher;
     private Date publishDate;
     @ReadOnlyProperty
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private long createdDate;
 
 }
