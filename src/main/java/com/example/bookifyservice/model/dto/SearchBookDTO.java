@@ -13,9 +13,9 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class SearchBookDTO {
 
-    @Size(min = 1, max = 100, message = "Book name lenght must be between 1 and 100!")
+    @Size(min = 1, max = 100, message = "Book name length must be between 1 and 100!")
     private String name;
-    @Size(min = 1, max = 100, message = "Author name lenght must be between 1 and 100!")
+    @Size(min = 1, max = 100, message = "Author name length must be between 1 and 100!")
     private String author;
     private Genre genre;
 
