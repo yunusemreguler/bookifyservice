@@ -1,5 +1,6 @@
 package com.example.bookifyservice.service;
 
+import com.example.bookifyservice.exception.BookAlreadyExistException;
 import com.example.bookifyservice.exception.BookNotFoundException;
 import com.example.bookifyservice.model.dao.BookDAO;
 import com.example.bookifyservice.model.dto.SearchBookDTO;
@@ -22,29 +23,32 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public BookDAO getBook(String id) {
-        Optional<BookDAO> bookDAO = bookRepository.findById(id);
-        if(!bookDAO.isPresent()){
+        Optional<BookDAO> bookDAOOptional = bookRepository.findById(id);
+        if(!bookDAOOptional.isPresent()){
             throwNotFound(id);
         }
-        return bookDAO.get();
+        return bookDAOOptional.get();
     }
 
     @Override
     public BookDAO createBook(BookDAO bookDAO) {
+        if(bookRepository.existsByName(bookDAO.getName())){
+            throw new BookAlreadyExistException("Book with name " + bookDAO.getName() + " already exists!");
+        }
         bookDAO.setCreatedDate(Utils.getTimestamp());
         return bookRepository.save(bookDAO);
     }
 
     @Override
     public BookDAO updateBook(String id, BookDAO bookDAO) {
-        doesBookExist(id);
+        doesBookExistById(id);
         bookDAO.setId(id);
         return bookRepository.save(bookDAO);
     }
 
     @Override
     public void deleteBook(String id) {
-        doesBookExist(id);
+        doesBookExistById(id);
         bookRepository.deleteById(id);
     }
 
@@ -57,7 +61,7 @@ public class BookServiceImpl implements BookService{
         return bookRepository.findAll(Example.of(searchBookDTO.toBookDAO(), customExampleMatcher), pageable);
     }
 
-    private void doesBookExist(String id) {
+    private void doesBookExistById(String id) {
         if(!bookRepository.existsById(id)){
             throwNotFound(id);
         }
@@ -66,4 +70,5 @@ public class BookServiceImpl implements BookService{
     private boolean throwNotFound(String id) {
         throw new BookNotFoundException("Book with Id : " + id + " not found.");
     }
+
 }
