@@ -4,7 +4,6 @@ import com.example.bookifyservice.exception.BookAlreadyExistException;
 import com.example.bookifyservice.exception.BookNotFoundException;
 import com.example.bookifyservice.model.domain.ApiExceptionResponse;
 import com.example.bookifyservice.util.Utils;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.servlet.http.HttpServletRequest;
 
